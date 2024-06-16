@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="task"
+            type="com.example.swiftandroidexample.model.Task" />
+
+        <variable
+            name="clickListener"
+            type="com.example.swiftandroidexample.adapter.TaskItemClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="0dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Checkbox for task completion -->
+            <CheckBox
+                android:id="@+id/checkBoxTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:checked="@{task.completed}" />
+
+            <!-- Task title -->
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="200dp"
+                android:maxLines="3"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/checkBoxTask"
+                android:text="@{task.title}"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewPriority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/textViewTitle"
+                android:background="@drawable/priority_background_mid_blue"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="@{task.priority == 0 ? `High Priority` : (task.priority == 2 ? `Mid Priority` : `Low Priority`)}"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- Task description -->
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTitle"
+                android:layout_alignStart="@id/textViewTitle"
+                android:layout_marginTop="4dp"
+                android:text="@{task.description}"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+
+            <!-- Tags -->
+            <LinearLayout
+                android:id="@+id/tagsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDescription"
+                android:layout_alignStart="@id/textViewDescription"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+            </LinearLayout>
+
+            <!-- Subtasks button/chip -->
+            <TextView
+                android:id="@+id/textViewSubtasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tagsContainer"
+                android:layout_alignStart="@id/tagsContainer"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/chip_background"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="@{@string/num_subtasks(task.subTasks.size())}"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:id="@+id/expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewSubtasks"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/subTasksRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <!-- Date TextView -->
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

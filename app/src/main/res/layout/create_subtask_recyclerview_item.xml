@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="subTask"
+            type="com.example.swiftandroidexample.model.SubTask" />
+
+        <variable
+            name="clickListener"
+            type="com.example.swiftandroidexample.adapter.CreateSubTaskRecyclerItemListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- Checkbox for subtask completion -->
+        <CheckBox
+            android:id="@+id/checkBoxSubTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:checked="@{subTask.completed}" />
+
+        <!-- Subtask title -->
+        <TextView
+            android:id="@+id/textViewSubTaskTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{subTask.title}"
+            android:textSize="16sp" />
+
+        <!-- Delete icon -->
+        <ImageView
+            android:id="@+id/imageViewDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="18dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/delete_subtask"
+            android:foregroundGravity="right"
+            android:onClick="@{() -> clickListener.onSubTaskDelete(subTask)}"
+            android:src="@drawable/ic_delete" />
+
+    </LinearLayout>
+</layout>

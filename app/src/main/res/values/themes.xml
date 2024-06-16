@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TaskAppDemo" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.TaskAppDemo" parent="Base.Theme.TaskAppDemo" >
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- Primary dark color. -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- Accent color. -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Custom Toolbar style -->
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/ToolbarTitleText</item>
+    </style>
+
+    <!-- Custom style for Toolbar title text -->
+    <style name="ToolbarTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+</resources>

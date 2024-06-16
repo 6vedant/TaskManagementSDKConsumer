@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="subTask"
+            type="com.example.swiftandroidexample.model.SubTask" />
+
+        <variable
+            name="task"
+            type="com.example.swiftandroidexample.model.Task" />
+
+        <variable
+            name="clickListener"
+            type="com.example.swiftandroidexample.adapter.SubTaskItemClickListener" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:onClick="@{() -> clickListener.onSubTaskClick(subTask, task)}">
+
+        <CheckBox
+            android:id="@+id/checkBoxSubTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="@{subTask.completed || task.completed}" />
+
+        <TextView
+            android:id="@+id/textViewSubTaskTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="@{subTask.title}"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</layout>

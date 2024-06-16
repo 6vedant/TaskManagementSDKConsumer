@@ -1,0 +1,103 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    namespace 'com.example.swiftandroidexample'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.swiftandroidexample"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["lib"]
+        }
+    }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
+dependencies {
+
+    // define library versions
+    var constraintLayoutVersion = "2.1.2"
+    var coroutines = "1.5.2"
+    var lifecycleVersion = "2.4.0"
+    var materialVersion = "1.4.0"
+    var kotlinVersion = "1.9.0"
+    var navVersion = "2.7.7"
+
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Kotlin components
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+
+    // Lifecycle components
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
+
+    // Navigation Library
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
+
+    // UI
+    implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
+    implementation("com.google.android.material:material:$materialVersion")
+    implementation("androidx.activity:activity-ktx:1.3.0")
+    implementation("androidx.fragment:fragment-ktx:1.3.0")
+
+
+    // testing libraries
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+task buildSwiftProject(type: Exec) {
+    commandLine 'scd',
+            'archive', '--type', 'android',
+            '--path', 'src/main/swift',
+            '-Xcc', '-Ilib/include',
+            '--platform', 'android-arm64-v8a', '-Xlinker:android-arm64-v8a', '-Llib/android-arm64-v8a', '--embed-library:android-arm64-v8a=src/main/swift/lib/android-arm64-v8a/libsqlite3.so',
+            '--platform', 'android-x86_64', '-Xlinker:android-x86_64', '-Llib/android-x86_64', '--embed-library:android-x86_64=src/main/swift/lib/android-x86_64/libsqlite3.so'
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleDebug' || task.name == 'assembleRelease') {
+        task.dependsOn buildSwiftProject
+    }
+}
