@@ -3,4 +3,5 @@
 
     <string name="num_subtasks">%d Sub-Task(s)</string>
     <string name="delete_subtask">Delete Subtask</string>
+    <string name="no_tasks_present_consider_adding_a_task">No Tasks Present, Consider Adding a Task!</string>
 </resources>

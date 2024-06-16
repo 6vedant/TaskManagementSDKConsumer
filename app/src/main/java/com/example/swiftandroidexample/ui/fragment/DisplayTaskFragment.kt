@@ -55,11 +55,15 @@ class DisplayTaskFragment : Fragment() {
         // init the adapter and bind it to the recyclerview
         val taskRecyclerAdapter =
 
-                TaskRecyclerAdapter(emptyList(), TaskItemClickListener(itemClickListener = {
-                    this.findNavController().navigate(
-                        DisplayTaskFragmentDirections.actionNavigateToUpdateTaskFragment(taskArg = taskViewModel.sortedTasks.value?.get(it))
+            TaskRecyclerAdapter(emptyList(), TaskItemClickListener(itemClickListener = {
+                this.findNavController().navigate(
+                    DisplayTaskFragmentDirections.actionNavigateToUpdateTaskFragment(
+                        taskArg = taskViewModel.sortedTasks.value?.get(
+                            it
+                        )
                     )
-                }), viewModel = taskViewModel)
+                )
+            }), viewModel = taskViewModel)
 
 
         binding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
@@ -69,9 +73,14 @@ class DisplayTaskFragment : Fragment() {
         taskViewModel.tasksList.observe(viewLifecycleOwner, Observer {
             try {
                 // Update the adapter's data and notify changes
-                Log.d("TAGDATA" , "REcyclerview adapter; data: "+it.toString())
+                Log.d("TAGDATA", "REcyclerview adapter; data: " + it.toString())
 
                 taskRecyclerAdapter?.updateTasks(it ?: mutableListOf())
+                if (it!!.isEmpty()) {
+                    binding.noTasksTextView.visibility = View.VISIBLE
+                } else {
+                    binding.noTasksTextView.visibility = View.GONE
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()

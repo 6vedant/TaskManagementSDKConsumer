@@ -110,6 +110,7 @@ class TaskViewModel : ViewModel() {
                     date = tasksDateCreated?.get(i),
                     priority = tasksPriority[i]
                 )
+                if(task.taskID.equals("-1")) continue
                 tasks.add(task)
 
             } catch (e: Exception) {
